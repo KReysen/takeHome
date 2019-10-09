@@ -34,7 +34,6 @@ describe("routes : lists", () => {
         expect(err).toBeNull();
         expect(body).toContain("Lists");
         expect(body).toContain("Leos Grocery List"); 
-        // functionality works but test fails here
         done();
       });
     });
@@ -112,6 +111,31 @@ describe("routes : lists", () => {
  
   });
 
+  describe("POST /lists/:id/update", () => {
+
+    it("should update the list with the given values", (done) => {
+       const options = {
+          url: `${base}${this.list.id}/update`,
+          form: {
+            title: "Leos Grocery List",
+            description: "Only the best for Leo"
+          }
+        };
+        request.post(options,
+          (err, res, body) => {
+          List.findOne({
+            where: { id: this.list.id }
+          })
+          .then((list) => {
+            expect(list.title).toBe("Leos Grocery List");
+            expect(list.description).toBe("Only the best for Leo");
+            done();
+          });
+        });
+    });
+
+  });
+
 
   describe("GET /lists/:id", () => {
 
@@ -119,7 +143,6 @@ describe("routes : lists", () => {
       request.get(`${base}${this.list.id}`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("Leos Grocery List");
-        // functionality works but test fails, needs rewrite
         done();
       });
     });
