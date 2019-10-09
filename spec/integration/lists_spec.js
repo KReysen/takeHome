@@ -33,9 +33,97 @@ describe("routes : lists", () => {
         expect(res.statusCode).toBe(200);
         expect(err).toBeNull();
         expect(body).toContain("Lists");
+        expect(body).toContain("Leo's Grocery List"); 
+        // functionality works but test fails here
         done();
       });
     });
   });
+
+  describe("GET /lists/new", () => {
+      it("should render a new list form", (done) => {
+          request.get(`${base}new`, (err, res, body) => {
+              expect(err).toBeNull();
+              expect(body).toContain("New Grocery List");
+              done();
+          });
+      });
+  });
+
+  describe("POST /lists/create", () => {
+      const options = {
+          url: `${base}create`,
+          form: {
+              title: "Mack's Grocery List",
+              description: "Dog-specific items"
+          }
+      };
+      it("should create a new list and redirect", (done) => { 
+          request.post(options,
+            (err, res, body) => {
+                List.findOne({where: {title: "Mack's Grocery List"}})
+                .then((list) => {
+                    expect(res.statusCode).toBe(303);
+                    expect(list.title).toBe("Mack's Grocery List");
+                    expect(list.description).toBe("Dog-specific items");
+                    done();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    done();
+                });
+            });
+      });
+  });
+
+  describe("POST /lists/:id/destroy", () => {
+
+    it("should delete the list with the associated ID", (done) => {
+      List.findAll()
+      .then((lists) => {
+        const listCountBeforeDelete = lists.length;
+
+        expect(listCountBeforeDelete).toBe(1);
+        request.post(`${base}${this.list.id}/destroy`, (err, res, body) => {
+          List.findAll()
+          .then((lists) => {
+            expect(err).toBeNull();
+            expect(lists.length).toBe(listCountBeforeDelete - 1);
+            done();
+          })
+
+        });
+      });
+
+    });
+
+  });
+
+  describe("GET /lists/:id/edit", () => {
+    it("should render a view with an edit list form", (done) => {
+        request.get(`${base}${this.list.id}/edit`, (err, res, body) => {
+          expect(err).toBeNull();
+          expect(body).toContain("Edit list");
+          expect(body).toContain("Leo's Grocery List");
+          done();
+        });
+      });
+ 
+  });
+
+
+  describe("GET /lists/:id", () => {
+
+    it("should render a view with the selected list", (done) => {
+      request.get(`${base}${this.list.id}`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Leo's Grocery List");
+        // functionality works but test fails, needs rewrite
+        done();
+      });
+    });
+
+  });
+  
 
 });
