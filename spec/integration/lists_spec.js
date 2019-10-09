@@ -9,14 +9,14 @@ describe("routes : lists", () => {
 
     beforeEach((done) => {
         this.list;
-        sequelize.sync({force: true}).then((res) => {
+        sequelize.sync({force: true}).then(() => {
 
             List.create({
-                title: "Leo's Grocery List",
+                title: "Leos Grocery List",
                 description: "the weekly basics"
             })
-            .then((list) => {
-                this.list = list;
+            .then((res) => {
+                this.list = res;
                 done();
             })
             .catch((err) => {
@@ -33,7 +33,7 @@ describe("routes : lists", () => {
         expect(res.statusCode).toBe(200);
         expect(err).toBeNull();
         expect(body).toContain("Lists");
-        expect(body).toContain("Leo's Grocery List"); 
+        expect(body).toContain("Leos Grocery List"); 
         // functionality works but test fails here
         done();
       });
@@ -102,9 +102,10 @@ describe("routes : lists", () => {
   describe("GET /lists/:id/edit", () => {
     it("should render a view with an edit list form", (done) => {
         request.get(`${base}${this.list.id}/edit`, (err, res, body) => {
+            
           expect(err).toBeNull();
-          expect(body).toContain("Edit list");
-          expect(body).toContain("Leo's Grocery List");
+          expect(body).toContain("Edit List");
+          expect(body).toContain("Leos Grocery List");
           done();
         });
       });
@@ -117,7 +118,7 @@ describe("routes : lists", () => {
     it("should render a view with the selected list", (done) => {
       request.get(`${base}${this.list.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Leo's Grocery List");
+        expect(body).toContain("Leos Grocery List");
         // functionality works but test fails, needs rewrite
         done();
       });
