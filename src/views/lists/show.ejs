@@ -11,6 +11,7 @@
       <a href="/lists/<%= list.id %>/edit" class="btn btn-warning">Edit</a>
       <form style="display:initial" action="/lists/<%= list.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="/lists/<%= list.id %>/groceries/new" class="btn btn-warning">Add new Grocery</a>
       </form>
 
       <p><%= list.description %></p>
@@ -21,6 +22,8 @@
           </li>
        <% }) %>
       </ul>
+
+      <a href="/lists">Back to Lists</a>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
