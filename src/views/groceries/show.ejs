@@ -10,6 +10,8 @@
       <h1><%= grocery.name %></h1>
 
       <p><%= grocery.price %></p>
+
+      <a href="/lists/<%= grocery.listId %>">Back to list</a>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
