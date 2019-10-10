@@ -47,7 +47,7 @@ describe("Grocery", () => {
                 done();
             });
         });
-        
+
         it("should not create a grocery with a missing name", (done) => {
             Grocery.create({
                 name: null
@@ -59,6 +59,33 @@ describe("Grocery", () => {
                 expect(err.message).toContain("Grocery.name cannot be null");
                 done();
             })
+        });
+    });
+
+    describe("#setList()", () => {
+        it("should associate a grocery and a list together", (done) => {
+            List.create({
+                title: "Leo List 1",
+                description: "a new list"
+            }) 
+            .then((newList) => {
+                expect(this.grocery.listId).toBe(this.list.id);
+                this.grocery.setList(newList)
+                .then((grocery) => {
+                    expect(grocery.listId).toBe(newList.id);
+                    done();
+                });
+            })
+        });
+    });
+
+    describe("#getList()", () => {
+        it("should return the associated list", (done) => {
+            this.grocery.getList()
+            .then((associatedList) => {
+                expect(associatedList.title).toBe("Family List 1");
+                done();
+            });
         });
     });
 
