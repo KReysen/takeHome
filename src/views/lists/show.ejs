@@ -14,6 +14,13 @@
       </form>
 
       <p><%= list.description %></p>
+      <ul class="list-group">
+        <% list.groceries.forEach((grocery) => { %>
+          <li class="list-group-item">
+            <a href="/lists/<%= list.id %>/groceries/<%= grocery.id %>"> <%= grocery.name %> </a>
+          </li>
+       <% }) %>
+      </ul>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
