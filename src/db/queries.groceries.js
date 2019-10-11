@@ -19,5 +19,33 @@ module.exports = {
         .catch((err) => {
             callback(err);
         })
+    },
+    deleteGrocery(id, callback){
+        return Grocery.destroy({
+            where: { id }
+        }) 
+        .then((deletedRecordsCount) => {
+            callback(null, deletedRecordsCount);
+        })
+        .catch((err) => {
+            callback(err);
+        })
+    },
+    updateGrocery(id, updatedGrocery, callback) {
+        return Grocery.findById(id)
+        .then((grocery) =>{
+            if(!grocery){
+                return callback("Grocery not found");
+            }
+            grocery.update(updatedGrocery, {
+                fields: Object.keys(updatedGrocery)
+            })
+            .then(() => {
+                callback(null, grocery);
+            })
+            .catch((err) => {
+                callback(err);
+            });
+        });
     }
 }

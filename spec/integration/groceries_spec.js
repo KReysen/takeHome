@@ -80,5 +80,63 @@ describe("routes : groceries", () => {
         });
     });
 
+    describe("POST /lists/:listId/groceries/:id/destroy", () => {
+        it("should delete the grocery with the associated ID", (done) => {
+            expect(this.grocery.id).toBe(1);
+            request.post(`${base}/${this.list.id}/groceries/${this.grocery.id}/destroy`, (err, res, body) => {
+                Grocery.findById(1)
+                .then((grocery) => {
+                    expect(err).toBeNull();
+                    expect(grocery).toBeNull();
+                    done();
+                })
+            });
+        });
+    });
+
+    describe("GET /lists/:listId/groceries/:id/edit", () => {
+        it("should render a view to edit grocery", (done) => {
+            request.get(`${base}/${this.list.id}/groceries/${this.grocery.id}/edit`, (err, res, body) => {
+                expect(err).toBeNull();
+                expect(body).toContain("Edit Grocery");
+                expect(body).toContain("Laundry detergent");
+                done();
+            });
+        });
+    });
+
+    describe("POST /lists/:listId/groceries/:id/update", () => {
+        it("should return a status code 302", (done) => {
+            request.post({
+                url: `${base}/${this.list.id}/groceries/${this.grocery.id}/update`,
+                form: {
+                    name: "Apples",
+                    price: 2.99
+                }
+            }, (err, res, body) => {
+                expect(res.statusCode).toBe(302);
+                done();
+            });
+        });
+        it("should update the grocery with the given values", (done) => {
+            const options = {
+                url: `${base}/${this.list.id}/groceries/${this.grocery.id}/update`,
+                form: {
+                    name: "Apples"
+                }
+            };
+            request.post(options, (err, res, body) => {
+                expect(err).toBeNull();
+                Grocery.findOne({
+                    where: {id: this.grocery.id}
+                })
+                .then((grocery) => {
+                    expect(grocery.name).toBe("Apples");
+                    done();
+                });
+            });
+        });
+    });
+
 
 });
