@@ -68,6 +68,26 @@ describe("routes : groceries", () => {
                 });
             });
         });
+        it("should not create a new grocery that fails validations", (done) => {
+            const options= {
+                url: `${base}/${this.list.id}/groceries/create`,
+                form: {
+                    name: "a",
+                    price: "seven"
+                }
+            };
+            request.post(options, (err, res, body) => {
+                Grocery.findOne({where: {name: "a"}})
+                .then((grocery) => {
+                    expect(grocery).toBeNull();
+                    done();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    done();
+                });
+            });
+        });
     });
 
     describe("GET /lists/:listId/groceries/:id", () => {
@@ -122,7 +142,8 @@ describe("routes : groceries", () => {
             const options = {
                 url: `${base}/${this.list.id}/groceries/${this.grocery.id}/update`,
                 form: {
-                    name: "Apples"
+                    name: "Apples",
+                    price: 2.99
                 }
             };
             request.post(options, (err, res, body) => {
