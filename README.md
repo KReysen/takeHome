@@ -6,3 +6,4 @@ Database - postgresql
 ORM- sequelize
 Validations- express-validator
 Flash messaging - express-session, express-flash
+Password hashing - bcrypt

@@ -19,7 +19,7 @@ describe("User", () => {
 
     it("should create a User object with a valid email and password", (done) => {
       User.create({
-        name: "Leo",
+        username: "Leo",
         email: "user@example.com",
         password: "1234567890"
       })
@@ -36,7 +36,7 @@ describe("User", () => {
 
     it("should not create a user with invalid email or password", (done) => {
       User.create({
-        name: "Mack",
+        username: "Mack",
         email: "It's-a me, Mario!",
         password: "1234567890"
       })
@@ -53,14 +53,14 @@ describe("User", () => {
     it("should not create a user with an email already taken", (done) => {
 
       User.create({
-        name: "Missy",
+        username: "Missy",
         email: "user@example.com",
         password: "1234567890"
       })
       .then((user) => {
 
         User.create({
-        name: "Lucy",
+        username: "Lucy",
           email: "user@example.com",
           password: "nananananananananananananananana BATMAN!"
         })
