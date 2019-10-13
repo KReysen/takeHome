@@ -3,17 +3,29 @@ const server = require("../../src/server");
 const base = "http://localhost:3000/lists/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const List = require("../../src/db/models").List;
+const User = require("../../src/db/models").User;
 
 
 describe("routes : lists", () => {
 
     beforeEach((done) => {
         this.list;
+        this.user;
+
         sequelize.sync({force: true}).then(() => {
+          User.create({
+            username: "becky",
+            email: "becky@theman.com",
+            password: "disarmer"
+          })
+          .then((user) => {
+            this.user = user;
+          })
 
             List.create({
                 title: "Leos Grocery List",
-                description: "the weekly basics"
+                description: "the weekly basics",
+                userId: this.user.id
             })
             .then((res) => {
                 this.list = res;

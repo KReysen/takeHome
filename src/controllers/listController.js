@@ -16,7 +16,8 @@ module.exports = {
     create(req, res, next){
         let newList = {
             title: req.body.title,
-            description: req.body.description
+            description: req.body.description,
+            userId: req.user.id
         };
         listQueries.addList(newList, (err, list) => {
             if(err){

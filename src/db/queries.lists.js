@@ -16,7 +16,8 @@ module.exports = {
     addList(newList, callback){
         return List.create({
             title: newList.title,
-            description: newList.description
+            description: newList.description,
+            userId: newList.userId
         })
         .then((list) => {
             callback(null, list);

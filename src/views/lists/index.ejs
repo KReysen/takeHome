@@ -9,16 +9,25 @@
 
       <h1>My Lists</h1>
 
+      <% if(currentUser) { %>
+        <a href="/lists/new">Create a new list</a>
+     
+
       <ul class="list-group">
 
         <% lists.forEach((list) => { %>
-          <li class="list-group-item">
-            <a href="/lists/<%= list.id %>"> <%= list.title %> </a>
-          </li>
+          <% if(currentUser.id == list.userId) { %>
+            <li class="list-group-item">
+                <a href="/lists/<%= list.id %>"> <%= list.title %> </a>
+              </li>
+          <% } %>
+          
         <% }) %>
       </ul>
 
-      <a href="/lists/new">Create a new list</a>
+      <% } else { %> 
+        <p>Create an account to make lists!</p>
+      <% } %>
 
     </main>
   </body>
