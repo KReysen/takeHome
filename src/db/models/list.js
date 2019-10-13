@@ -8,10 +8,19 @@ module.exports = (sequelize, DataTypes) => {
     description: {
     type: DataTypes.STRING,
     allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {});
   List.associate = function(models) {
     // associations can be defined here
+    List.belongsTo(models.User, {
+      foreignKey: "userId",
+      onDelete: "CASCADE"
+    });
+
     List.hasMany(models.Grocery, {
       foreignKey: "listId",
       as: "groceries"
