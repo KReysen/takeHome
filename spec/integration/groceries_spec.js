@@ -11,10 +11,21 @@ describe("routes : groceries", () => {
         this.user;
         this.list;
         this.grocery;
+
+
         sequelize.sync({force: true}).then((res) => {
+            User.create({
+                username: "becky",
+                email: "becky@theman.com",
+                password: "disarmer"
+              })
+              .then((user) => {
+                this.user = user;
+              })
             List.create({
                 title: "Target list",
-                description: "Avoid the stuff at the front"
+                description: "Avoid the stuff at the front",
+                userId: this.user.id
             })
             .then((list) => {
                 this.list = list;
@@ -38,6 +49,7 @@ describe("routes : groceries", () => {
 
     describe("GET /lists/:listId/groceries/new", () => {
         it("should render a create grocery form", (done) => {
+            console.log(this.list.id);
             request.get(`${base}/${this.list.id}/groceries/new`, (err, res, body) => {
                 expect(err).toBeNull();
                 expect(body).toContain("Create new Grocery");
@@ -52,7 +64,8 @@ describe("routes : groceries", () => {
                 url: `${base}/${this.list.id}/groceries/create`,
                 form: {
                     name: "Tide Pods",
-                    price: 15.88
+                    price: 15.88,
+                    listId: this.list.id
                 }
             };
             request.post(options, (err, res, body) => {
@@ -133,7 +146,8 @@ describe("routes : groceries", () => {
                 url: `${base}/${this.list.id}/groceries/${this.grocery.id}/update`,
                 form: {
                     name: "Apples",
-                    price: 2.99
+                    price: 2.99,
+                    listId: this.list.id
                 }
             }, (err, res, body) => {
                 expect(res.statusCode).toBe(302);
@@ -145,7 +159,8 @@ describe("routes : groceries", () => {
                 url: `${base}/${this.list.id}/groceries/${this.grocery.id}/update`,
                 form: {
                     name: "Apples",
-                    price: 2.99
+                    price: 2.99,
+                    listId: this.list.id
                 }
             };
             request.post(options, (err, res, body) => {
