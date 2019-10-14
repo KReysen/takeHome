@@ -16,7 +16,8 @@ describe("routes : lists", () => {
           User.create({
             username: "becky",
             email: "becky@theman.com",
-            password: "disarmer"
+            password: "disarmer",
+            role: "admin"
           })
           .then((user) => {
             this.user = user;
@@ -37,6 +38,30 @@ describe("routes : lists", () => {
             });
         });
     });
+describe("admin user performing CRUD actions", () => {
+  beforeEach((done) => {
+    User.create({
+      username: "admin",
+      email: "admin@example.com",
+      password: "123456",
+      role: "admin"
+    })
+    .then((user) => {
+      request.get({         // mock authentication
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          username: user.username,
+          role: user.role,     // mock authenticate as admin user
+          userId: user.id,
+          email: user.email
+        }
+      },
+        (err, res, body) => {
+          done();
+        }
+      );
+    });
+  });
 
   describe("GET /lists", () => {
 
@@ -160,6 +185,6 @@ describe("routes : lists", () => {
     });
 
   });
-  
+})
 
 });
