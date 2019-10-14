@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "listId",
       onDelete: "CASCADE"
     });
+    Grocery.hasMany(models.Purchased, {
+      foreignKey: "groceryId",
+      as: "purchaseds"
+    });
   };
   return Grocery;
 };

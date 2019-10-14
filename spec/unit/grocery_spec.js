@@ -33,8 +33,6 @@ describe("Grocery", () => {
 
     describe("#create()", () => {
         it("should create a grocery item with a name, price, and assigned list", (done) => {
-            console.log(this.user.username);
-            console.log(this.list.title);
             Grocery.create({
                 name: "Pork chops",
                 price: 8.99,
