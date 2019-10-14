@@ -4,9 +4,11 @@ const base = "http://localhost:3000/lists";
 const sequelize = require("../../src/db/models/index").sequelize;
 const List = require("../../src/db/models").List;
 const Grocery = require("../../src/db/models").Grocery;
+const User = require("../../src/db/models").User;
 
 describe("routes : groceries", () => {
     beforeEach((done) => {
+        this.user;
         this.list;
         this.grocery;
         sequelize.sync({force: true}).then((res) => {
