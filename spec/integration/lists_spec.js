@@ -5,6 +5,29 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const List = require("../../src/db/models").List;
 const User = require("../../src/db/models").User;
 
+function authorizeUser(role, done) {
+  User.create({
+    email: `#{role}@example.com`,
+    password: "123456",
+    role: role,
+    username: "example"
+  })
+  .then((user) => {
+    request.get({         // mock authentication
+      url: "http://localhost:3000/auth/fake",
+      form: {
+        role: user.role,     // mock authenticate as `role` user
+        userId: user.id,
+        email: user.email,
+        username: user.username
+      }
+    },
+      (err, res, body) => {
+        done();
+      }
+    );
+  });
+}
 
 describe("routes : lists", () => {
 
@@ -26,7 +49,7 @@ describe("routes : lists", () => {
             List.create({
                 title: "Leos Grocery List",
                 description: "the weekly basics",
-                userId: this.user.id
+                userId: user.id
             })
             .then((res) => {
                 this.list = res;
@@ -39,38 +62,17 @@ describe("routes : lists", () => {
         });
     });
 describe("admin user performing CRUD actions", () => {
-  beforeEach((done) => {
-    User.create({
-      username: "admin",
-      email: "admin@example.com",
-      password: "123456",
-      role: "admin"
-    })
-    .then((user) => {
-      request.get({         // mock authentication
-        url: "http://localhost:3000/auth/fake",
-        form: {
-          username: user.username,
-          role: user.role,     // mock authenticate as admin user
-          userId: user.id,
-          email: user.email
-        }
-      },
-        (err, res, body) => {
-          done();
-        }
-      );
-    });
-  });
+ beforeEach((done) => {
+   authorizeUser("admin", done);
+ });
 
   describe("GET /lists", () => {
-
     it("should return a status code 200 and all lists", (done) => {
       request.get(base, (err, res, body) => {
         expect(res.statusCode).toBe(200);
         expect(err).toBeNull();
-        expect(body).toContain("Lists");
-        expect(body).toContain("Leos Grocery List"); 
+        expect(body).toContain("My Lists");
+      
         done();
       });
     });
