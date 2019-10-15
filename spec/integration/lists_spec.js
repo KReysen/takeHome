@@ -69,10 +69,10 @@ describe("admin user performing CRUD actions", () => {
   describe("GET /lists", () => {
     it("should return a status code 200 and all lists", (done) => {
       request.get(base, (err, res, body) => {
+        console.log(this.user.username);
         expect(res.statusCode).toBe(200);
         expect(err).toBeNull();
         expect(body).toContain("My Lists");
-      
         done();
       });
     });

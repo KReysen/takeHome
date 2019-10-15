@@ -43,7 +43,7 @@ module.exports = {
     destroy(req, res, next){
         listQueries.deleteList(req.params.id, (err, list) => {
             if(err) {
-                res.redirect(500, `/lists/${req.params.id}`)
+                res.redirect(500, `/lists/${list.id}`)
             } else {
                 res.redirect(303, "/lists")
             }

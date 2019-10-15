@@ -1,5 +1,6 @@
 const List = require("./models").List;
 const Grocery = require("./models").Grocery;
+const Authorizer = require("../policies/application");
 
 module.exports = {
 
@@ -27,23 +28,16 @@ module.exports = {
         })
     },
 
-    deleteList(req, callback){
-        return List.findById(req.params.id)
-        .then((list) => {
-            const authorized = new Authorizer(req.user, list).destroy();
-            if(authorized){
-                list.destroy()
-                .then((res) => {
-                    callback(null, list);
-                });
-            } else {
-                req.flash("notice", "You are not authorized to do that.")
-                callback(401);
-           }
-         })
-         .catch((err) => {
-         callback(err);
-       });
+    deleteList(id, callback) {
+        return List.destroy({
+            where: {id}
+        })
+        .then((list) =>{
+            callback(null, list);
+        })
+        .catch((err) => {
+            callback(err);
+        })
     },
     updateList(req, updatedList, callback){
         return List.findById(req.params.id)
