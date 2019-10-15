@@ -19,6 +19,9 @@
         <% list.groceries.forEach((grocery) => { %>
           <li class="list-group-item">
             <a href="/lists/<%= list.id %>/groceries/<%= grocery.id %>"> <%= grocery.name %> </a>
+            <% if(currentUser) { %>
+              <% include ../purchaseds/purchasing.ejs %>
+            <% } %>
           </li>
        <% }) %>
       </ul>

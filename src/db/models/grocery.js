@@ -24,5 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       as: "purchaseds"
     });
   };
+
+  Grocery.prototype.getPurchasedFor = function(userId){
+    return this.purchaseds.find((purchased) => { return purchased.userId == userId });
+  };
+  
   return Grocery;
 };

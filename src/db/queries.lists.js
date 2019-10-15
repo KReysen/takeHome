@@ -1,5 +1,6 @@
 const List = require("./models").List;
 const Grocery = require("./models").Grocery;
+const Purchased = require("./models").Purchased;
 const Authorizer = require("../policies/application");
 
 module.exports = {
@@ -64,11 +65,12 @@ module.exports = {
     },
     getList(id, callback){
         return List.findById(id, {
-            include: [{
-                model: Grocery,
-                as: "groceries"
-            }]
-        }) 
+            include: [
+                {model: Grocery, as: "groceries", include: [
+                    {model: Purchased, as: "purchaseds"}
+                ]}
+            ]
+        })
         .then((list) => {
             callback(null, list);
         })

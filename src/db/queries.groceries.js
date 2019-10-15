@@ -1,5 +1,7 @@
 const List = require("./models").List;
 const Grocery = require("./models").Grocery;
+const Purchased = require("./models").Purchased;
+const User = require("./models").User;
 
 module.exports = {
     addGrocery(newGrocery, callback){
@@ -12,7 +14,11 @@ module.exports = {
         })
     },
     getGrocery(id, callback){
-        return Grocery.findById(id)
+        return Grocery.findById(id, {
+            include: [
+                {model: Purchased, as: "purchaseds"}
+            ]
+        })
         .then((grocery) => {
             callback(null, grocery);
         })

@@ -10,6 +10,9 @@
       <h1><%= grocery.name %></h1>
 
       <p><%= grocery.price %></p>
+      <% if(currentUser) { %>
+        <% include ../purchaseds/purchasing.ejs %>
+      <% } %>
       <a href="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/edit" class="btn btn-warning">Edit</a>
       <form style="display:initial" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
