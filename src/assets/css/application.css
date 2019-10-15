@@ -1,3 +1,52 @@
 body {
     padding-top: 54px;
+    background-color: #F6FFF6;
   }
+  .navbar {
+    background-color: #2E5266;
+  }
+ .jumbotron {
+background-color: #FF715B;
+}
+.btn-primary {
+  background-color: #1EA896;
+  border-color: #1EA896;
+}
+.btn-warning{
+  margin-top:1em;
+  margin-bottom: 1em;
+}
+#list-of-list-item{
+ font-size: large;
+}
+#list-of-grocery-item{
+font-size: large;
+padding-right: 1em;
+}
+h2{
+  padding-top: 1em;
+}
+#new-list-btn{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.card-header{
+ 
+  background-color:#ff715B;
+}
+.list-group-item a{
+  color:#1EA896;
+}
+#list-card{
+  background-color: #FF715B;
+
+  padding: 1em;
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+#grocery-card{
+  padding-top: 1em;
+}
+#grocery-card-item{
+  background-color: #6E8898;
+}

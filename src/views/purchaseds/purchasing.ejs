@@ -1,12 +1,15 @@
- <!-- #1 -->
+
  <% const purchased = grocery.getPurchasedFor(currentUser.id) %>
- <% if (purchased) { %>
+ <% if (purchased) { %>  <p class="badge badge-primary badge-pill" >Got It</p>
+    
    <form style="display: initial;" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/purchaseds/<%= purchased.id %>/destroy" method="post">
-     <button type="submit" class="btn btn-danger">Uncheck</button>
+     <button type="submit" class="btn btn-danger float-right">Remove from cart</button>
    </form>
- <% } else { %>
-  <!-- #2 -->
+
+ <% } else { %>   <p class="badge badge-warning badge-pill">Need it</p>
+
    <form style="display: initial;" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/purchaseds/create" method="post">
-     <button type="submit" class="btn btn-primary">Check</button>
+     <button type="submit" class="btn btn-primary float-right">Add to cart</button>
    </form>
+ 
  <% } %>

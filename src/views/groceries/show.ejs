@@ -7,12 +7,20 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
-      <h1><%= grocery.name %></h1>
+      
 
-      <p><%= grocery.price %></p>
+      <div class="card" id="grocery-card">
+          <h2 class="card-header"><%= grocery.name %></h2>
+<ul class="list-group">
+  <li class="list-group-item" id="grocery-card-item">
+      <p>Price: $<%= grocery.price %></p>
       <% if(currentUser) { %>
         <% include ../purchaseds/purchasing.ejs %>
       <% } %>
+      </li>
+    </ul>
+
+    </div>
       <a href="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/edit" class="btn btn-warning">Edit</a>
       <form style="display:initial" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>

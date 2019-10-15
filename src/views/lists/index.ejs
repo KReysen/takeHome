@@ -7,10 +7,10 @@
     <main class="container">
       <% include ../static/partials/navbar.ejs %>
 
-      <h1>My Lists</h1>
+      <h2 id="list-header">My Lists</h2>
 
       <% if(currentUser) { %>
-        <a href="/lists/new">Create a new list</a>
+        <a href="/lists/new" class="btn btn-primary" id="new-list-btn">Create a new list</a>
      
 
       <ul class="list-group">
@@ -18,7 +18,7 @@
         <% lists.forEach((list) => { %>
           <% if(currentUser.id == list.userId) { %>
             <li class="list-group-item">
-                <a href="/lists/<%= list.id %>"> <%= list.title %> </a>
+                <a id="list-of-list-item" href="/lists/<%= list.id %>"> <%= list.title %> </a>
               </li>
           <% } %>
           

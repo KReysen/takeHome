@@ -16,6 +16,10 @@
           <h1 class="display-3">Welcome to GroceryList</h1>
           <p class="lead">An application for users to share grocery lists.</p>
           <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
+          <a href="/users/sign_in" class="btn btn-primary btn-lg">Sign In</a>
+          <% if(currentUser) { %>
+            <a href="/lists" class="btn btn-primary btn-lg">My Lists</a>
+          <% } %>
         </header>
 
         <!-- Page Features -->

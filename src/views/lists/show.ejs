@@ -9,23 +9,25 @@
     <main class="container">
 
         <% include ../static/partials/messages.ejs %>
-      <h1><%= list.title %></h1>
+      <h2><%= list.title %></h2>
       <p><%= list.description %></p>
       <a href="/lists/<%= list.id %>/groceries/new" class="btn btn-warning">Add new Grocery</a>
      
 
-  
+  <div class="card" id="list-card">
       <ul class="list-group">
         <% list.groceries.forEach((grocery) => { %>
+          
           <li class="list-group-item">
-            <a href="/lists/<%= list.id %>/groceries/<%= grocery.id %>"> <%= grocery.name %> </a>
+            <a id="list-of-grocery-item" href="/lists/<%= list.id %>/groceries/<%= grocery.id %>"> <%= grocery.name %> </a>
             <% if(currentUser) { %>
               <% include ../purchaseds/purchasing.ejs %>
             <% } %>
           </li>
+       
        <% }) %>
       </ul>
-
+    </div>
       <a href="/lists/<%= list.id %>/edit" class="btn btn-warning">Edit</a>
       <form style="display:initial" action="/lists/<%= list.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
