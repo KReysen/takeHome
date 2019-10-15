@@ -57,8 +57,58 @@ describe("Purchased", () => {
           }
           );
       });
-      describe("POST /lists/:listId/gro")
-  })
+      
+      describe("POST /lists/:listId/groceries.groceryId/purchaseds/create", () => {
+          it("should create a purchased", (done) => {
+              const options = {
+                  url: `${base}${this.list.id}/groceries/${this.grocery.id}/purchaseds/create`
+              };
+              request.post(options, (err, res, body) => {
+                  Purchased.findOne({
+                      where: {
+                          userId: this.user.id,
+                          groceryId: this.grocery.id 
+                      }
+                  })
+                  .then((purchased) => {
+                      expect(purchased).not.toBeNull();
+                      expect(purchased.userId).toBe(this.user.id);
+                      expect(purchased.groceryId).toBe(this.grocery.id);
+                      done();
+                  })
+                  .catch((err) => {
+                      console.log(err);
+                      done();
+                  });
+              });
+          });
+      });
+      describe("POST /lists/:listId/groceries.groceryId/purchaseds/create", () => {
+          it("should destroy a purchased", (done) => {
+              const options = {
+                url: `${base}${this.list.id}/groceries/${this.grocery.id}/purchaseds/create`
+              };
+              let purCountBeforeDelete;
+              request.post(options, (err, res, body) => {
+                  this.grocery.getPurchaseds()
+                  .then((purchaseds) => {
+                      const purchased = purchaseds[0];
+                      purCountBeforeDelete = purchaseds.length;
+                      request.post(`${base}${this.list.id}/groceries/${this.grocery.id}/purchaseds/${purchased.id}/destroy`,
+                      (err, res, body) => {
+                          this.grocery.getPurchaseds()
+                          .then((purchaseds) => {
+                              expect(purchaseds.length).toBe(purCountBeforeDelete -1);
+                              done();
+                          });
+                      }
+                      );
+                  });
+              });
+          });
+      });
+
+  });
 
     
 })
