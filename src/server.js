@@ -29,7 +29,7 @@ function normalizePort(val) {
 io.on('connection', function(socket) {
   
   socket.on('clicked', function(data) {
-    console.log('button clicked');
+    
     io.sockets.emit('updateView');
   })
 });

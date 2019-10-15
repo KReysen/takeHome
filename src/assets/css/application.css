@@ -1,16 +1,27 @@
 body {
     padding-top: 54px;
     background-color: #F6FFF6;
+    font-family: 'Roboto', sans-serif;
   }
   .navbar {
     background-color: #2E5266;
+    font-family: 'Mansalva', cursive;
   }
  .jumbotron {
+   margin-top: 2em;
 background-color: #FF715B;
+font-family: 'Mansalva', cursive;
+}
+.display-4 {
+  padding: .5em;
 }
 .btn-primary {
   background-color: #1EA896;
   border-color: #1EA896;
+}
+.index-btn{
+  margin: 1em;
+  display: block;
 }
 .btn-warning{
   margin-top:1em;
@@ -20,11 +31,12 @@ background-color: #FF715B;
  font-size: large;
 }
 #list-of-grocery-item{
-font-size: large;
-padding-right: 1em;
+
+padding-right: .25em;
 }
 h2{
   padding-top: 1em;
+  font-family: 'Mansalva', cursive;
 }
 #new-list-btn{
   margin-top: 1em;
@@ -49,4 +61,10 @@ h2{
 }
 #grocery-card-item{
   background-color: #6E8898;
+}
+.badge-primary {
+  background-color:#1EA896;
+}
+.badge-warning {
+
 }

@@ -12,14 +12,17 @@
       <main class="container">
 
         <!-- Jumbotron Header -->
-        <header class="jumbotron my-4">
-          <h1 class="display-3">Welcome to GroceryList</h1>
-          <p class="lead">An application for users to share grocery lists.</p>
-          <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
-          <a href="/users/sign_in" class="btn btn-primary btn-lg">Sign In</a>
+        <header class="jumbotron ">
+          <h4 class="display-4">GroceryList</h4>
+          <p class="lead">An application for real-time shared grocery lists</p>
+ 
           <% if(currentUser) { %>
-            <a href="/lists" class="btn btn-primary btn-lg">My Lists</a>
-          <% } %>
+            <a href="/lists" class="btn btn-primary btn-lg index-btn">My Lists</a>
+            <a href="/users/sign_out" class="btn btn-primary btn-lg index-btn">Sign out</a>
+          <% } else { %>
+            <a href="/users/sign_up" class="btn btn-primary btn-lg index-btn">Sign up</a>
+            <a href="/users/sign_in" class="btn btn-primary btn-lg index-btn">Sign In</a>
+            <% } %>
         </header>
 
         <!-- Page Features -->

@@ -1,16 +1,19 @@
 
  <% const purchased = grocery.getPurchasedFor(currentUser.id) %>
- <% if (purchased) { %>  <p class="badge badge-primary badge-pill" >Got It</p>
+ <% if (!purchased) { %>  
+
+ <form onsubmit="buttonClicked()" style="display: initial;" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/purchaseds/create" method="post">
+   <button type="submit" class="badge badge-warning badge-pill float-right">Need it</button>
+ </form>
+
+ <% } else if(purchased) { %>  
     
-   <form onsubmit="buttonClicked()" style="display: initial;" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/purchaseds/<%= purchased.id %>/destroy" method="post">
-     <button  type="submit" class="btn btn-danger float-right">Remove from cart</button>
-   </form>
-
- <% } else { %>   <p class="badge badge-warning badge-pill">Need it</p>
-
-   <form onsubmit="buttonClicked()" style="display: initial;" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/purchaseds/create" method="post">
-     <button type="submit" class="btn btn-primary float-right">Add to cart</button>
-   </form>
+ <form onsubmit="buttonClicked()" style="display: initial;" action="/lists/<%= grocery.listId %>/groceries/<%= grocery.id %>/purchaseds/<%= purchased.id %>/destroy" method="post">
+   <button  type="submit" class="badge badge-primary badge-pill float-right">Got it</button>
+ </form>
+  
+  
+  
  
  <% } %>
 
