@@ -21,8 +21,6 @@ module.exports = {
         }
     },
     create(req, res, next){
-        const authorized = new Authorizer(req.user).create();
-        if(authorized) {
         let newList = {
             title: req.body.title,
             description: req.body.description,
@@ -34,11 +32,7 @@ module.exports = {
             } else {
                 res.redirect(303, `/lists/${list.id}`);
             }
-        }); 
-        } else {
-            req.flash("notice", "You are not authorized to do that");
-            res.redirect("/lists");
-        }
+        });
     },
     destroy(req, res, next){
         listQueries.deleteList(req.params.id, (err, list) => {

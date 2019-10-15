@@ -43,33 +43,69 @@ describe("routes : lists", () => {
             role: "admin"
           })
           .then((user) => {
+            request.get({
+              url: "http://localhost:3000/auth/fake",
+              form: {
+                role: user.role,     // mock authenticate as `role` user
+                userId: user.id,
+                email: user.email,
+                username: user.username
+              }
+            }, (err, res, body) => {
+              done();
+            });
+            
             this.user = user;
-          })
+            console.log('created user', this.user.username);
+        
 
             List.create({
                 title: "Leos Grocery List",
                 description: "the weekly basics",
-                userId: user.id
+                userId: this.user.id
             })
-            .then((res) => {
-                this.list = res;
+            .then((list) => {
+                this.list = list;
+                console.log('created list', this.list.title)
                 done();
             })
             .catch((err) => {
                 console.log(err);
                 done();
             });
+          });
         });
     });
 describe("admin user performing CRUD actions", () => {
- beforeEach((done) => {
-   authorizeUser("admin", done);
- });
+  beforeEach((done) => {
+    User.create({
+      username: "example",
+      email: "admin@example.com",
+      password: "123456",
+      role: "admin"
+    })
+    .then((user) => {
+      request.get({         // mock authentication
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: user.role,     // mock authenticate as admin user
+          userId: user.id,
+          email: user.email
+        }
+      },
+        (err, res, body) => {
+          done();
+        }
+      );
+    });
+  });
 
   describe("GET /lists", () => {
     it("should return a status code 200 and all lists", (done) => {
       request.get(base, (err, res, body) => {
         console.log(this.user.username);
+        console.log(this.list.title);
+        console.log(res.body);
         expect(res.statusCode).toBe(200);
         expect(err).toBeNull();
         expect(body).toContain("My Lists");
@@ -81,6 +117,7 @@ describe("admin user performing CRUD actions", () => {
   describe("GET /lists/new", () => {
       it("should render a new list form", (done) => {
           request.get(`${base}new`, (err, res, body) => {
+            console.log(res.body);
               expect(err).toBeNull();
               expect(body).toContain("New Grocery List");
               done();
