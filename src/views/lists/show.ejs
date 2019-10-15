@@ -9,12 +9,13 @@
     <main class="container">
 
         <% include ../static/partials/messages.ejs %>
-      <h2><%= list.title %></h2>
-      <p><%= list.description %></p>
-      <a href="/lists/<%= list.id %>/groceries/new" class="btn btn-warning">Add new Grocery</a>
+
+      
      
 
   <div class="card" id="list-card">
+      <h2 class="card-header.text-center"><%= list.title %></h2>
+      <p><%= list.description %></p>
       <ul class="list-group">
         <% list.groceries.forEach((grocery) => { %>
           
@@ -28,13 +29,15 @@
        <% }) %>
       </ul>
     </div>
+
+    <a href="/lists/<%= list.id %>/groceries/new" class="btn btn-warning">Add new Grocery</a>
       <a href="/lists/<%= list.id %>/edit" class="btn btn-warning">Edit</a>
       <form style="display:initial" action="/lists/<%= list.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
         
       </form>
 
-      <a href="/lists">Back to Lists</a>
+      <a href="/lists" class="btn btn-primary">Back to Lists</a>
     </main>
     
     <% include ../static/partials/baseScripts.ejs %>

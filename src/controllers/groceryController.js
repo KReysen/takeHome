@@ -14,7 +14,7 @@ module.exports = {
             if(err){
                 res.redirect(500, "/groceries/new");
             } else {
-                res.redirect(303, `/lists/${newGrocery.listId}/groceries/${grocery.id}`);
+                res.redirect(303, `/lists/${newGrocery.listId}`);
             }
         });
     },

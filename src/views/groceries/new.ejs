@@ -8,8 +8,8 @@
 
     <main class="container">
         <% include ../static/partials/messages.ejs %>
-      <h1>Create new Grocery</h1>
-      <form action="/lists/<%= listId %>/groceries/create" method="post">
+      <h2>Create new Grocery</h2>
+      <form class="create-form" action="/lists/<%= listId %>/groceries/create" method="post">
         <div class="form-group">
           <label for="name">Grocery name</label>
           <input type="text" class="form-control" name="name" aria-describedby="nameHelp" placeholder="enter new grocery name">
