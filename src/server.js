@@ -19,17 +19,9 @@ function normalizePort(val) {
   return false;
 }
 
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-//   socket.on('buttonClicked', function(msg){
-//     console.log('btn: ' + msg);
-//     socket.broadcast.emit('newClick', 'someone clicked' + msg)
-//   });
-// });
+
 io.on('connection', function(socket) {
-  
-  socket.on('clicked', function(data) {
-    
+  socket.on('clicked', function(data) { 
     io.sockets.emit('updateView');
   })
 });
